@@ -27,7 +27,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apalah | Dashboard</title>
+    <title>FinTrack | Dashboard</title>
     <link rel="stylesheet" href="./css/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -53,8 +53,13 @@ session_start();
     <!-- Sidebar -->
         <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
             <div class="p-6 flex items-center gap-2">
-                <div class="bg-emerald-600 p-2 rounded-lg text-white font-bold">KU</div>
-                <h1 class="text-xl font-bold tracking-tight text-emerald-950">KeuanganKu</h1>
+                <div class="flex gap-2 flex-row">
+                    <img src="../src/img/logo.png" alt="Logo" class="w-10 h-10 object-contain rounded-md">
+                    <div class="flex flex-col items-center md:items-start">
+                        <h1 class="text-2xl font-bold tracking-tight text-emerald-950">FinTrack</h1>
+                        <span class="text-xs text-gray-400">Track Every Worth Precisely</span>
+                    </div>
+                </div>
             </div>
             <nav class="flex-1 px-4 space-y-1 mt-4">
                 <a href="./dashboard.php" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-emerald-100 hover:text-emerald-900 font-medium">

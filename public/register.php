@@ -11,13 +11,16 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Apalah | Register</title>
+    <title>FinTrack | Register</title>
 </head>
 <body class="font-['Inter'] bg-gray-100">
     <header class="w-full h-16 bg-white border-b border-gray-200 flex items-center px-6 z-10">
-        <div class="flex items-center gap-2">
-            <span class="p-2 bg-emerald-500 rounded-md text-center text-white font-extrabold text-balance">KU</span>
-            <h1 class="text-xl font-extrabold text-emerald-600">Apalah</h1>
+        <div class="flex gap-2 flex-row">
+            <img src="../src/img/logo.png" alt="Logo" class="w-10 h-10 object-contain rounded-md">
+            <div class="flex flex-col items-center md:items-start">
+                <h1 class="text-2xl font-bold tracking-tight text-emerald-950">FinTrack</h1>
+                <span class="text-xs text-gray-400">Track Every Worth Precisely</span>
+            </div>
         </div>
     </header><br>
 
