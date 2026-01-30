@@ -85,7 +85,7 @@ session_start();
                 <a href="./dashboard.php" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-emerald-100 hover:text-emerald-900 font-medium">
                     <i class="fa-solid fa-chart-line mr-2"></i> Dashboard
                 </a>
-                <a href="#" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-emerald-100 hover:text-emerald-900 font-medium">
+                <a href="./transactions.php" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-emerald-100 hover:text-emerald-900 font-medium">
                     <i class="fa-solid fa-wallet mr-2"></i> Transactions
                 </a>
                 <a href="#" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-emerald-100 hover:text-emerald-900 font-medium">
@@ -165,24 +165,31 @@ session_start();
                 <!-- Quick Add Modal -->
                 <div id="transactionModal" class="min-h-screen fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4 z-40 hidden">
                     <div class="bg-white rounded-xl w-96 p-6">
-                        <h2 class="text-xl font-bold mb-4">Add Transaction</h2>
+                        <h2 class="text-2xl font-bold mb-4 text-emerald-800">Add Transaction</h2>
 
                         <form action="../src/php/transactions/store.php" method="POST" class="space-y-4">
-                            <input
-                                type="number"
-                                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                name="nominal"
-                                placeholder="Amount"
-                                required
-                            >
-                            <select name="tipe" class="w-full border rounded-lg p-2" required>
+                            <!-- Input Nominal -->
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nominal</label>
+                                <input
+                                    type="text"
+                                    id="nominalInput"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-lg font-semibold"
+                                    placeholder="Rp 0"
+                                    autocomplete="off"
+                                    required
+                                >
+                                <input type="hidden" name="nominal" id="nominalHidden">
+                            </div>
+
+                            <select name="tipe" class="w-full border rounded-lg mb-4 p-2" required>
                                 <option value="" disabled selected>Select Type</option>
                                 <option value="masuk">Income</option>
                                 <option value="keluar">Expense</option>
                             </select>
                             <input
                                 type="text"
-                                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                class="w-full mb-4 px-3 py-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                                 name="ket"
                                 placeholder="Description"
                                 required

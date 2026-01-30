@@ -1,3 +1,4 @@
+// Password Visibility Toggle
 function togglePasswordVisibility(btn) {
     const input = document.getElementById("password");
     const icon = btn.querySelector("i");
@@ -13,6 +14,7 @@ function togglePasswordVisibility(btn) {
     }
 }
 
+// Success Modal Auto Close
 function closeSuccessModal() {
     const modal = document.getElementById("successModal");
     if (!modal) return;
@@ -25,6 +27,7 @@ setTimeout(() => {
 }, 2500);
 
 
+// Chart
 document.addEventListener("DOMContentLoaded", () => {
     const ctx = document.getElementById("expenseChart");
     if (!ctx) return;
@@ -37,14 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     label: "Pemasukan",
                     data: chartIncomeData,
-                    backgroundColor: "#10b981", // Green color for income
+                    backgroundColor: "#10b981",
                     borderRadius: 6,
                     barThickness: 30,
                 },
                 {
                     label: "Pengeluaran",
                     data: chartExpenseData,
-                    backgroundColor: "#f43f5e", // Red/Pink color for expenses
+                    backgroundColor: "#f43f5e",
                     borderRadius: 6,
                     barThickness: 30,
                 }
@@ -92,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+
     // Modal handlers
     const openModalBtn = document.getElementById("openModal");
     const closeModalBtn = document.getElementById("closeModal");
@@ -113,5 +117,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 modal.classList.remove("flex");
             }
         };
+    }
+
+    // Currency formatting for nominal input
+    const nominalInput = document.getElementById('nominalInput');
+    const nominalHidden = document.getElementById('nominalHidden');
+    if (nominalInput && nominalHidden) {
+        // Format function
+        function formatCurrency(input) {
+            // Get only digits
+            let value = input.value.replace(/\D/g, '');
+            
+            if (!value || value === '0') {
+                input.value = '';
+                nominalHidden.value = '';
+                return;
+            }
+            // Convert to number and format
+            const numberValue = parseInt(value, 10);
+            const formatted = numberValue.toLocaleString('id-ID');
+            
+            // Update inputs
+            input.value = 'Rp ' + formatted;
+            nominalHidden.value = numberValue;
+        }
+        // On input event (typing, paste, etc)
+        nominalInput.addEventListener('input', function(e) {
+            formatCurrency(e.target);
+        });
+        // On focus, clear placeholder behavior
+        nominalInput.addEventListener('focus', function(e) {
+            if (e.target.value === '' || e.target.value === 'Rp 0') {
+                e.target.value = '';
+            }
+        });
+        // Prevent paste of non-numeric
+        nominalInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            const onlyNumbers = pastedText.replace(/\D/g, '');
+            if (onlyNumbers) {
+                e.target.value = onlyNumbers;
+                formatCurrency(e.target);
+            }
+        });
     }
 });
