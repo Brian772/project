@@ -9,6 +9,6 @@ if(isset($_SESSION['user_id'])) {
     );
 }
 
-setccookie("remember_token", "", time() - 3600, "/");
+setcookie("remember_token", "", time() - 3600, "/");
 session_destroy();
-header("Location: ./index.php");
+header("Location: ../../../public/index.php");

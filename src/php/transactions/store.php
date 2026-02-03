@@ -32,7 +32,17 @@ $query->bind_param(
     $aset
 );
 
-$query->execute();
+$success = $query->execute();
+
+if (isset($_POST['ajax'])) {
+    header('Content-Type: application/json');
+    if ($success) {
+        echo json_encode(['success' => true, 'message' => 'Transaction added successfully!']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to add transaction: ' . $conn->error]);
+    }
+    exit;
+}
 
 if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
     header("Location: " . $_SERVER['HTTP_REFERER']);

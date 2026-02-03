@@ -29,17 +29,17 @@ if (isset($_GET['from']) && $_GET['from'] === 'register') {
 
     <!-- Session Success Message -->
     <?php if (isset($_SESSION['success'])): ?>
-        <div id="successModal" class="fixed flex top-20 right-1 -translate-x-1 items-center justify-end z-50 mr-4 pointer-events-none">
-            <div class="w-full max-w-md bg-white border rounded-2xl shadow-xl p-5 text-center pointer-events-auto relative">
-                <div class="text-emerald-500 text-xl mb-3">
-                    <i class="fa-solid fa-circle-check fa-3x"></i>
-                    <h2 class="text-lg font-bold mb-2">Registration Success</h2>
-                    <p class="text-sm text-gray-400 mb-5">
-                        <?= $_SESSION['success']; ?>
-                    </p>
+        <div id="successModal" class="fixed flex top-6 right-6 items-center justify-end z-50 pointer-events-none animate-slide-in">
+            <div class="bg-white border border-emerald-100 rounded-xl shadow-lg p-4 flex items-center gap-4 pointer-events-auto min-w-[300px]">
+                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-check text-emerald-600 text-lg"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm">Registration Success</h4>
+                    <p class="text-xs text-slate-500"><?= $_SESSION['success']; ?></p>
                 </div>
             </div>
-            <?php unset($_SESSION['success']); endif?>
+            <?php unset($_SESSION['success']); endif;?>
         </div>
 
     <!-- Login Form -->

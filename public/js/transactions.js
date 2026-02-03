@@ -46,6 +46,108 @@ function setupCurrencyFormat(inputId, hiddenId) {
 setupCurrencyFormat('nominalInput', 'nominalHidden');
 setupCurrencyFormat('editNominalInput', 'editNominalHidden');
 
+// Add Transaction Modal Handlers for Transactions Page
+const addTransactionForm = document.querySelector('#transactionModal form');
+if (addTransactionForm) {
+    addTransactionForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Client-side validation
+        const nominal = document.getElementById('nominalHidden').value;
+        const tipe = addTransactionForm.querySelector('input[name="tipe"]:checked');
+        const kategori = addTransactionForm.querySelector('input[name="kategori"]').value.trim();
+        const aset = addTransactionForm.querySelector('input[name="aset"]').value.trim();
+
+        if (!nominal || nominal === '0') {
+            showModalMessage('Please enter a valid amount', 'error');
+            return;
+        }
+
+        if (!tipe) {
+            showModalMessage('Please select transaction type', 'error');
+            return;
+        }
+
+        if (!kategori) {
+            showModalMessage('Please enter a category', 'error');
+            return;
+        }
+
+        if (!aset) {
+            showModalMessage('Please enter an asset', 'error');
+            return;
+        }
+
+        // Show loading state
+        const submitBtn = addTransactionForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Adding...';
+
+        // Prepare form data
+        const formData = new FormData(this);
+        formData.append('ajax', '1');
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showModalMessage('Transaction added successfully!', 'success');
+                    // Reset form
+                    addTransactionForm.reset();
+                    document.getElementById('nominalInput').value = '';
+                    document.getElementById('nominalHidden').value = '';
+                    // Close modal after delay
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                        // Reload page to show new transaction
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    showModalMessage(data.message || 'Failed to add transaction', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showModalMessage('An error occurred while adding transaction', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            });
+    });
+}
+
+// Function to show messages in modal
+function showModalMessage(message, type) {
+    // Remove existing message
+    const existingMsg = document.querySelector('.modal-message');
+    if (existingMsg) existingMsg.remove();
+
+    const modalContent = document.querySelector('#transactionModal .bg-white');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `modal-message p-3 rounded-lg mb-4 text-sm font-medium ${type === 'success' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
+        }`;
+    messageDiv.textContent = message;
+
+    // Insert after title
+    const title = modalContent.querySelector('h2');
+    title.insertAdjacentElement('afterend', messageDiv);
+
+    // Auto remove after 3 seconds for success
+    if (type === 'success') {
+        setTimeout(() => messageDiv.remove(), 3000);
+    }
+}
+
 // Modal handlers for Add Transaction
 const openModalBtn = document.getElementById('openModal');
 const closeModalBtn = document.getElementById('closeModal');
@@ -120,8 +222,6 @@ if (editForm) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Determine if we should reload or update UI
-                    // For now, reload to reflect changes strictly
                     window.location.reload();
                 } else {
                     alert(data.message || 'Failed to update transaction');
@@ -158,7 +258,14 @@ function editTransaction(id) {
 
             // Populate form
             document.getElementById('editId').value = data.id;
-            document.getElementById('editTipe').value = data.tipe;
+
+            // Set radio button for type
+            if (data.tipe === 'masuk') {
+                document.getElementById('editTipeMasuk').checked = true;
+            } else {
+                document.getElementById('editTipeKeluar').checked = true;
+            }
+
             document.getElementById('editKategori').value = data.kategori || '';
             document.getElementById('editAset').value = data.aset || '';
             document.getElementById('editKet').value = data.ket;

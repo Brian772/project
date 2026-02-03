@@ -43,7 +43,7 @@ function getDashboardData($conn, $user_id) {
 
 function getLastTransactions($conn, $user_id, $limit = 5) {
     $q = $conn->prepare("
-        SELECT ket, tanggal, nominal, tipe
+        SELECT ket, tanggal, nominal, tipe, kategori
         FROM transactions
         WHERE user_id=?
         ORDER BY tanggal DESC
